@@ -1,5 +1,5 @@
 "use client"
-import React, { startTransition, useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import { Card } from './ui/card'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -11,7 +11,7 @@ import { ForecastData } from '@/interfaces/forecast-interface'
 
 const WeatherDisplayArea = () => {
     const today = new Date();
-    let dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [startIndex, setStartIndex] = useState<number>(0);
     const [apiSearchString, setApiSearchString] = useState<string>("");
     const [isFavorited, setIsFavorited] = useState<boolean>(false);
@@ -89,9 +89,9 @@ const WeatherDisplayArea = () => {
 
     const getForcastWeatherIcon = (data: ForecastData, indexValue: number) => {
         if(data.list.length != 0) {
-            let endIndex: number = indexValue + 8;
+            const endIndex: number = indexValue + 8;
             let topOfIconHierarchy: string = "00d";
-            let iconArray: string[] = [];
+            const iconArray: string[] = [];
             for (let i: number = indexValue; i < endIndex; i++) {
                 if (data.list[i].weather[0].icon == "50d" || data.list[i].weather[0].icon == "50n") {
                     iconArray.push("05d");
@@ -112,8 +112,8 @@ const WeatherDisplayArea = () => {
 
     const getForcastDescription = (data: ForecastData, indexValue: number) => {
         if(data.list.length != 0) {
-            let endIndex: number = indexValue + 8;
-            let descriptionArray: string[] = [];
+            const endIndex: number = indexValue + 8;
+            const descriptionArray: string[] = [];
             for (let i: number = indexValue; i < endIndex; i++) {
                 descriptionArray.push(data.list[i].weather[0].description);
             }
@@ -127,7 +127,7 @@ const WeatherDisplayArea = () => {
     const getMaxTemp = (data: ForecastData, indexValue: number) => {
         let maxTemp: number = -150;
         if(data.list.length != 0) {
-            let endIndex: number = indexValue + 8;
+            const endIndex: number = indexValue + 8;
             for (let i: number = indexValue; i < endIndex; i++) {
                 if (data.list.length !=0 && data.list[i].main.temp_max > maxTemp) {
                     maxTemp = Math.round(data.list[i].main.temp_max);
@@ -142,7 +142,7 @@ const WeatherDisplayArea = () => {
     const getMinTemp = (data: ForecastData, indexValue: number) => {
         let minTemp: number = 150;
         if(data.list.length != 0) {
-            let endIndex: number = indexValue + 8;
+            const endIndex: number = indexValue + 8;
             for (let i: number = indexValue; i < endIndex; i++) {
                 if (data.list.length != 0 && data.list[i].main.temp_min < minTemp) {
                     minTemp = Math.round(data.list[i].main.temp_min);
@@ -155,9 +155,9 @@ const WeatherDisplayArea = () => {
     }
     
     const searchOnClick = async () => {
-        let locationInput: string = apiSearchString.toLowerCase().trim();
-        let handle: string[] = locationInput.split(',');
-        let tempArr: string[] = [];
+        const locationInput: string = apiSearchString.toLowerCase().trim();
+        const handle: string[] = locationInput.split(',');
+        const tempArr: string[] = [];
         let tempString: string = "";
         for (let j: number = 0; j < handle[0].length; j++) {
             if (handle[0].charAt(j) == ' ') {

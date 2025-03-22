@@ -1,6 +1,6 @@
 export const saveToLocalStorage = (cityName: string) => {
     console.log(`Saving this string to local storage ${cityName}`);
-    let favoritesListArr = getFromLocalStorage();
+    const favoritesListArr = getFromLocalStorage();
 
     if (!favoritesListArr.includes(cityName)) {
         favoritesListArr.push(cityName);
@@ -10,7 +10,7 @@ export const saveToLocalStorage = (cityName: string) => {
 }
 
 export const getFromLocalStorage = () => {
-    let localStorageData = localStorage.getItem('Starred');
+    const localStorageData: string | null = localStorage.getItem('Starred');
 
     if (localStorageData == null) {
         return [];
@@ -20,9 +20,9 @@ export const getFromLocalStorage = () => {
 }
 
 export const removeFromLocalStorage = (cityName: string) => {
-    let localStorageData = getFromLocalStorage();
+    const localStorageData: string[] = getFromLocalStorage();
 
-    let starredCitiesIndex = localStorageData.indexOf(cityName);
+    const starredCitiesIndex: number = localStorageData.indexOf(cityName);
 
     localStorageData.splice(starredCitiesIndex, 1);
 
