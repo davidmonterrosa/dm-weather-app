@@ -207,6 +207,10 @@ const WeatherDisplayArea = () => {
     }, [])
 
     useEffect(() => {
+        console.log(currentWeatherData);
+    }, [currentWeatherData])
+
+    useEffect(() => {
         getforecastStartIndex(fiveDayForcast);
         console.log(startIndex);
         getMaxTemp(fiveDayForcast, startIndex);

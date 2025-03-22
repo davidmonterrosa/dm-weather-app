@@ -1,7 +1,7 @@
 import { ForecastData } from "@/interfaces/forecast-interface";
 import { CurrentWeather } from "@/interfaces/current-weather-interface";
 
-const APIKEY = process.env.APIKEY;
+const APIKEY = process.env.NEXT_PUBLIC_APIKEY;
 
 export const getWeatherData = async (searchQuery: string) => {
     const response: Response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchQuery}&appid=${APIKEY}&units=imperial`);
