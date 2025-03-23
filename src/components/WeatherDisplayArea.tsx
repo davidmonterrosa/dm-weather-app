@@ -220,9 +220,9 @@ const WeatherDisplayArea = () => {
     }, [fiveDayForcast])
 
   return (
-    <main className='grid lg:grid-cols-12 lg:grid-rows-8 lg:col-span-10 lg:row-span-6 lg:gap-5'>
-        <section className='grid col-start-2 row-start-2 col-span-10 row-span-3 gap-5'>
-            <Card className='grid row-start-2 col-span-6 bg-[#00000066] border-none text-white py-4 px-5'>
+    <main className='grid grid-cols-1 grid-rows-7 gap-4 mx-3 py-3 md:grid-cols-2 lg:grid-cols-12 lg:grid-rows-8 lg:col-span-10 lg:row-span-6 lg:gap-5'>
+        <section className='grid row-start-1 row-span-2 gap-4 md:col-span-2 lg:col-start-2 lg:row-start-2 lg:col-span-10 lg:row-span-3 lg:gap-5'>
+            <Card className='grid row-start-1 md:col-start-1 lg:row-start-2 lg:col-span-6 bg-[#00000066] border-none text-white py-4 px-5'>
                 <div className='flex justify-between'>
                     <p className='text-2xl'>{`Today is: ${today.toLocaleDateString()}`}</p>
                     <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={addToFavoritesOnClick}>
@@ -278,7 +278,7 @@ const WeatherDisplayArea = () => {
                 </div>
             </Card>
 
-            <Card className='grid row-start-2 col-span-4 bg-[#00000066] border-none py-0'>
+            <Card className='grid row-start-2 md:col-start-2 md:row-start-1 lg:row-start-2 lg:col-span-4 bg-[#00000066] border-none py-0'>
                 <div className='w-full max-h-16 bg-[#D9D9D9] rounded-t-xl'>
                     <div className='flex justify-between'>
                         <Input placeholder='Search for a city' onChange={(event) => setApiSearchString(event.target.value)}/>
@@ -291,24 +291,24 @@ const WeatherDisplayArea = () => {
 
             </Card>
         </section>
-        <section className='grid col-start-2 row-start-5 col-span-10 row-span-3 gap-5'>
-            <div className='grid col-start-1 col-span-2'> 
+        <section className='grid row-start-3 row-span-5 md:col-span-2 gap-4 lg:col-start-2 lg:row-start-5 lg:col-span-10 lg:row-span-3 lg:gap-5'>
+            <div className='grid lg:col-start-1 lg:col-span-2'> 
                 <DailyForecastCard day={dayOfTheWeek[(today.getDay()) % 7]} image={currentWeatherData.weather.length != 0 ? `https://openweathermap.org/img/wn/${currentWeatherData.weather[0].icon}@2x.png` : "https://openweathermap.org/img/wn/00d@2x.png"} description={currentWeatherData.weather.length != 0 ? currentWeatherData.weather[0].description : "Error"} high={getMaxTemp(fiveDayForcast, startIndex)} low={getMinTemp(fiveDayForcast, startIndex)}   /> 
             </div>
 
-            <div className='grid col-start-3 col-span-2'> 
+            <div className='grid md:col-start-2 lg:col-start-3 lg:col-span-2'> 
                 <DailyForecastCard day={dayOfTheWeek[(today.getDay() + 1) % 7]} image={getForcastWeatherIcon(fiveDayForcast, startIndex)} description={getForcastDescription(fiveDayForcast, startIndex)} high={getMaxTemp(fiveDayForcast, startIndex)} low={getMinTemp(fiveDayForcast, startIndex)}  /> 
             </div>
 
-            <div className='grid col-start-5 col-span-2'> 
+            <div className='grid lg:col-start-5 lg:col-span-2'> 
                 <DailyForecastCard day={dayOfTheWeek[(today.getDay() + 2) % 7]} image={getForcastWeatherIcon(fiveDayForcast, startIndex + 8)} description={getForcastDescription(fiveDayForcast, startIndex + 8)} high={getMaxTemp(fiveDayForcast, startIndex + 8)} low={getMinTemp(fiveDayForcast, startIndex + 8)}  /> 
             </div>
 
-            <div className='grid col-start-7 col-span-2'> 
+            <div className='grid md:col-start-2 lg:col-start-7 lg:col-span-2'> 
                 <DailyForecastCard day={dayOfTheWeek[(today.getDay() + 3) % 7]} image={getForcastWeatherIcon(fiveDayForcast, startIndex + 16)} description={getForcastDescription(fiveDayForcast, startIndex + 16)} high={getMaxTemp(fiveDayForcast, startIndex + 16)} low={getMinTemp(fiveDayForcast, startIndex + 16)} /> 
             </div>
 
-            <div className='grid col-start-9 col-span-2'> 
+            <div className='grid lg:col-start-9 lg:col-span-2'> 
                 <DailyForecastCard day={dayOfTheWeek[(today.getDay() + 4) % 7]} image={getForcastWeatherIcon(fiveDayForcast, startIndex +24)} description={getForcastDescription(fiveDayForcast, startIndex + 24)} high={getMaxTemp(fiveDayForcast, startIndex + 24)} low={getMinTemp(fiveDayForcast, startIndex + 24)}  /> 
             </div>
         </section>
