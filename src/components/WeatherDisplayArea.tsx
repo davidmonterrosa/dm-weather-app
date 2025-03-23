@@ -183,21 +183,20 @@ const WeatherDisplayArea = () => {
     
     }
 
-    // const displayFavorites = (favorites: string[]) => {
-    //     favorites.map(city => {
-            
-    //     });
-    // }
+    const displayFavoriteCityData = async (city: string) => {
+        getFiveDayForecast(city);
+        setCurrentWeatherData(await getWeatherData(city));
+    }
 
-    const addToFavoritesOnClick = () => {
-        setIsFavorited(!isFavorited);
-        console.log(isFavorited);
-        if (isFavorited) {
-            saveToLocalStorage(currentWeatherData.name);
+    const addToFavoritesOnClick = (city: string) => {
+        // setIsFavorited(!isFavorited);
+        // console.log(isFavorited);
+        if (!favoritesListArr.includes(city)) {
+            saveToLocalStorage(city);
             setFavoritesListArr(getFromLocalStorage());
             console.log(favoritesListArr)
         } else {
-            removeFromLocalStorage(currentWeatherData.name);
+            removeFromLocalStorage(city);
             setFavoritesListArr(getFromLocalStorage());
             console.log(favoritesListArr)
         }
@@ -235,7 +234,7 @@ const WeatherDisplayArea = () => {
             <Card className='grid row-start-1 md:col-start-1 lg:row-start-2 lg:col-span-6 bg-[#00000066] border-none text-white py-4 px-5'>
                 <div className='flex justify-between'>
                     <p className='text-2xl'>{`Today is: ${today.toLocaleDateString()}`}</p>
-                    <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={addToFavoritesOnClick}>
+                    <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={() => addToFavoritesOnClick(currentWeatherData.name)}>
                         {
                             favoritesListArr.includes(currentWeatherData.name) ?
                                 <img id='addFavoriteIcon' src="/heartFilled.png" alt="Favorite Icon" />
@@ -297,15 +296,15 @@ const WeatherDisplayArea = () => {
                         </Button>
                     </div>
                 </div>
-                <div className='flex-col'>
+                <div className='flex-col overflow-y-scroll'>
                     {
                         favoritesListArr.length > 0 ?
                         favoritesListArr.map((city, index) => (
-                            <div className='flex justify-between mx-4' key={index}>
-                                <div className='text-white'>
+                            <div className='flex justify-between mx-4 mb-4' key={index}>
+                                <Button className='text-white bg-transparent' onClick={() => displayFavoriteCityData(city)}>
                                     <p>{city}</p>
-                                </div>
-                                <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={addToFavoritesOnClick}>
+                                </Button>
+                                <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={() => addToFavoritesOnClick(city)}>
                                     <img src="/heartFilled.png" alt="Heart icon" />
                                 </Button>
                             </div>
