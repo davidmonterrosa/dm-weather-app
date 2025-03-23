@@ -13,7 +13,7 @@ const WeatherDisplayArea = () => {
     const today = new Date();
     const dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const [startIndex, setStartIndex] = useState<number>(0);
-    const [apiSearchString, setApiSearchString] = useState<string>("");
+    const [apiSearchString, setApiSearchString] = useState<string>("stockton, us");
     const [isFavorited, setIsFavorited] = useState<boolean>(false);
     const [favoritesListArr, setFavoritesListArr] = useState<string[]>([]);
     const [fiveDayForcast, setFiveDayForecast] = useState<ForecastData>({
@@ -80,7 +80,6 @@ const WeatherDisplayArea = () => {
     const getforecastStartIndex = (data: ForecastData) => {
         for (let i: number = 0; i < data.list.length; i++) {
             if (data.list[i].dt_txt.includes("00:00:00")) {
-                console.log(i);
                 setStartIndex(i);
             }
         }
@@ -99,7 +98,6 @@ const WeatherDisplayArea = () => {
                     iconArray.push(data.list[i].weather[0].icon);
                 }
             }
-            console.log(iconArray.toString());
             for (let j = 0; j < iconArray.length; j++) {
                 if (topOfIconHierarchy.localeCompare(iconArray[j]) == -1) {
                     topOfIconHierarchy = iconArray[j];
@@ -133,7 +131,6 @@ const WeatherDisplayArea = () => {
                     maxTemp = Math.round(data.list[i].main.temp_max);
                 }
             }
-            console.log(`${maxTemp}`);
             return `${maxTemp}°`;
         }
         return `${maxTemp}°`;
@@ -148,7 +145,6 @@ const WeatherDisplayArea = () => {
                     minTemp = Math.round(data.list[i].main.temp_min);
                 }
             }
-            console.log(`${minTemp}°`);
             return `${minTemp}°`;
         }
         return `${minTemp}°`;
@@ -180,19 +176,30 @@ const WeatherDisplayArea = () => {
             tempString = "";
         }
         setApiSearchString(tempArr.join(","));
+        console.log(isFavorited);
         console.log(apiSearchString);
         getFiveDayForecast(apiSearchString);
         setCurrentWeatherData(await getWeatherData(apiSearchString));
     
     }
+
+    // const displayFavorites = (favorites: string[]) => {
+    //     favorites.map(city => {
+            
+    //     });
+    // }
+
     const addToFavoritesOnClick = () => {
         setIsFavorited(!isFavorited);
+        console.log(isFavorited);
         if (isFavorited) {
-            saveToLocalStorage(apiSearchString);
+            saveToLocalStorage(currentWeatherData.name);
             setFavoritesListArr(getFromLocalStorage());
+            console.log(favoritesListArr)
         } else {
-            removeFromLocalStorage(apiSearchString);
+            removeFromLocalStorage(currentWeatherData.name);
             setFavoritesListArr(getFromLocalStorage());
+            console.log(favoritesListArr)
         }
     
     }
@@ -207,12 +214,15 @@ const WeatherDisplayArea = () => {
     }, [])
 
     useEffect(() => {
-        console.log(currentWeatherData);
+        if(favoritesListArr.includes(apiSearchString)){
+            setIsFavorited(true);
+        } else {
+            setIsFavorited(false);
+        }
     }, [currentWeatherData])
 
     useEffect(() => {
         getforecastStartIndex(fiveDayForcast);
-        console.log(startIndex);
         getMaxTemp(fiveDayForcast, startIndex);
         getMinTemp(fiveDayForcast, startIndex);
         getForcastWeatherIcon(fiveDayForcast, startIndex);
@@ -227,7 +237,7 @@ const WeatherDisplayArea = () => {
                     <p className='text-2xl'>{`Today is: ${today.toLocaleDateString()}`}</p>
                     <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={addToFavoritesOnClick}>
                         {
-                            favoritesListArr.includes(apiSearchString) ?
+                            favoritesListArr.includes(currentWeatherData.name) ?
                                 <img id='addFavoriteIcon' src="/heartFilled.png" alt="Favorite Icon" />
                             :
                                 <img id='addFavoriteIcon' src="/heartEmpty.png" alt="Favorite Icon" />
@@ -286,7 +296,23 @@ const WeatherDisplayArea = () => {
                             <img src="/searchIcon.png" alt="search icon" />
                         </Button>
                     </div>
-
+                </div>
+                <div className='flex-col'>
+                    {
+                        favoritesListArr.length > 0 ?
+                        favoritesListArr.map((city, index) => (
+                            <div className='flex justify-between mx-4' key={index}>
+                                <div className='text-white'>
+                                    <p>{city}</p>
+                                </div>
+                                <Button className='bg-transparent hover:bg-[#FFFFFF40] hover:cursor-pointer' onClick={addToFavoritesOnClick}>
+                                    <img src="/heartFilled.png" alt="Heart icon" />
+                                </Button>
+                            </div>
+                        ))
+                        :
+                        null
+                    }
                 </div>
 
             </Card>
