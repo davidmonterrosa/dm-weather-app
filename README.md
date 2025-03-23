@@ -11,5 +11,6 @@ Must have a component folder ( App cannot be built in the app.js or in the index
 TailWind or Bootstrap
 Mobile and Desktop versions must be built out
 
-Peer Reviewed By: 
+Peer Reviewed By: Chris Wells-Hott
+Great work! I like how you created a interface on another page to help with organization. When on desktop and mobile the sizing of the search icon is overflowing other than that this is solid work.
 
